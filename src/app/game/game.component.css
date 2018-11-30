@@ -1,0 +1,24 @@
+.example-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  min-width: 300px;
+  overflow: auto;
+}
+
+.isbn-col {
+  flex: 0 0 100px !important;
+  white-space: unset !important;
+}
+
+.button-row {
+  margin: 10px 0;
+}
+
+.mat-cell {
+  padding: 0 20px 0 20px;
+}
+
+.mat-header-cell {
+  padding: 0 20px 0 20px;
+}

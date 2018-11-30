@@ -1,0 +1,35 @@
+<div class="example-container mat-elevation-z8">
+  <table mat-table #table [dataSource]="dataSource">
+
+    <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+
+
+    <!-- Title Column -->
+    <ng-container matColumnDef="title">
+      <th mat-header-cell *matHeaderCellDef> Title </th>
+      <td mat-cell *matCellDef="let element" class="isbn-col"> {{element.title}} </td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="category">
+      <th mat-header-cell *matHeaderCellDef> Category </th>
+      <td mat-cell *matCellDef="let element" > {{element.category}} </td>
+    </ng-container>
+
+    <!-- Author Column -->
+    <ng-container matColumnDef="producer">
+      <th mat-header-cell *matHeaderCellDef> Producer </th>
+      <td mat-cell *matCellDef="let element"> {{element.producer}} </td>
+    </ng-container>
+
+    <!-- Author Column -->
+    <ng-container matColumnDef="publisher">
+      <th mat-header-cell *matHeaderCellDef> Publisher </th>
+      <td mat-cell *matCellDef="let element"> {{element.publisher}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row = index; columns: displayedColumns;" [routerLink]="['/game-details/', row]"></tr>
+  </table>
+</div>

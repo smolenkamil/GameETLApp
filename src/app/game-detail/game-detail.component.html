@@ -1,0 +1,29 @@
+<div class="button-row">
+  <a mat-raised-button color="primary" [routerLink]="['/games']"><mat-icon>list</mat-icon></a>
+</div>
+<mat-card class="example-card">
+  <mat-card-header>
+    <mat-card-title><h2>{{game.title}}</h2></mat-card-title>
+    <mat-card-subtitle>{{game.date}}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <dl>
+      <dt>Platform:</dt>
+      <dd>{{game.platform}}</dd>
+      <dt>Category:</dt>
+      <dd>{{game.category}}</dd>
+      <dt>Producer:</dt>
+      <dd>{{game.producer}}</dd>
+      <dt>Publisher:</dt>
+      <dd>{{game.publisher}}</dd>
+      <dt>Tags:</dt>
+      <dd>{{game.tags.join(" ")}}</dd>
+      <dt>Similar:</dt>
+      <dd>{{game.similar.join("\n")}}</dd>
+      <dt>Rating:</dt>
+      <dd>{{game.rating.value + "/10 of "+game.rating.quantity+" user votes"}}</dd>
+      <dt>Thumbs:</dt>
+      <dd>{{"UP: "+ game.thumbs.up + "\n DOWN: "+ game.thumbs.down}}</dd>
+    </dl>
+  </mat-card-content>
+</mat-card>
