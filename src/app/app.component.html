@@ -1,6 +1,10 @@
 <div id="wrap">
-  <app-top-tab [dt]="tabData[0]"></app-top-tab>
-  <app-top-tab [dt]="tabData[1]"></app-top-tab>
-  <div style="width: 100%; height: 20px; background: white; clear: both"> </div>
+  <div>
+    <mat-card-title id="title">{{currentTitle}}</mat-card-title>
+  </div>
+  <mat-button-toggle-group name="menu" aria-label="Font Style" value="{{currentUrl}}">
+    <mat-button-toggle [routerLink]="['/etl']" value="/etl">ETL Process</mat-button-toggle>
+    <mat-button-toggle [routerLink]="['/games']" value="/games">Game List</mat-button-toggle>
+  </mat-button-toggle-group>
 <router-outlet></router-outlet>
 </div>

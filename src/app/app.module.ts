@@ -16,9 +16,9 @@ import {
   MatTableModule,
   MatIconModule,
   MatButtonModule,
+  MatButtonToggleModule,
   MatCardModule,
   MatFormFieldModule } from '@angular/material';
-import { TopTabComponent } from './items/top-tab/top-tab.component';
 import { EtlPageComponent } from './etl-page/etl-page.component';
 
 const appRoutes: Routes = [
@@ -48,7 +48,6 @@ const appRoutes: Routes = [
     AppComponent,
     GameComponent,
     GameDetailComponent,
-    TopTabComponent,
     EtlPageComponent
   ],
   imports: [
@@ -62,6 +61,7 @@ const appRoutes: Routes = [
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
+    MatButtonToggleModule,
     MatProgressSpinnerModule,
     MatIconModule,
     MatButtonModule,
