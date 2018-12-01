@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var fs = require('fs');
+var iconv = require('iconv-lite');
+var encoding = 'win1250';
 var request = require('request');
 var cheerio = require('cheerio');
 var mainData = []
@@ -31,8 +33,9 @@ router.get('/', function(req, res, next){
 
 function getDataFromSubPage(url, proc){
   return new Promise(((resolve) => {
-    request(url, function(error, response, html) {
-      resolve(retrieveDataFromHtml(html, proc))
+    request({url:url, encoding:null}, function(error, response, html) {
+      var htmlx = iconv.decode(html,encoding);
+      resolve(retrieveDataFromHtml(htmlx, proc))
     });
   }))
 }
@@ -48,8 +51,9 @@ function objDebug(mess,obj){
 
 function getComments(urlx) {
   return new Promise(((resolve, reject) => {
-    request(urlx, function(error, response, html) {
-      var $ = cheerio.load(html);
+    request({url: urlx, encoding: null}, function(error, response, html) {
+      var htmlx = iconv.decode(html,encoding);
+      var $ = cheerio.load(htmlx,{ decodeEntities: false });
       var comArr = []
       $('.kom-lay-2016-c').children().filter(function () {
         var data = $(this)
@@ -103,7 +107,7 @@ function getComments(urlx) {
 
 function retrieveDataFromHtml(html,proc){
   return new Promise(((resolve, reject) => {
-    var $ = cheerio.load(html);
+    var $ = cheerio.load(html,{ decodeEntities: false });
     var textx = ""
     var json = {
       producer: "",
@@ -184,9 +188,10 @@ function retrieveDataFromHtml(html,proc){
 
 function getDataFromMain(url){
   return new Promise(((resolve, reject) => {
-    request(url, function(error, response, html){
+    request({url:url, encoding:null}, function(error, response, html){
       if(!error){
-        var $ = cheerio.load(html);
+        var htmlx = iconv.decode(html,encoding);
+        var $ = cheerio.load(htmlx,{ decodeEntities: false });
         var json = [];
         var links = []
         //debug
