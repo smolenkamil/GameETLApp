@@ -22,3 +22,7 @@
 .mat-header-cell {
   padding: 0 20px 0 20px;
 }
+
+.mat-row{
+  cursor: pointer;
+}

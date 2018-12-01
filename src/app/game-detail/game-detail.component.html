@@ -10,20 +10,48 @@
     <dl>
       <dt>Platform:</dt>
       <dd>{{game.platform}}</dd>
+      <dd> </dd>
       <dt>Category:</dt>
       <dd>{{game.category}}</dd>
+      <dd> </dd>
       <dt>Producer:</dt>
       <dd>{{game.producer}}</dd>
+      <dd> </dd>
       <dt>Publisher:</dt>
       <dd>{{game.publisher}}</dd>
+      <dd> </dd>
       <dt>Tags:</dt>
-      <dd>{{game.tags.join(" ")}}</dd>
+      <dd *ngFor="let tag of game.tags">{{tag}}</dd>
+      <dd> </dd>
       <dt>Similar:</dt>
-      <dd>{{game.similar.join("\n")}}</dd>
+      <dd *ngFor="let similar of game.similar">{{similar}}</dd>
+      <dd> </dd>
       <dt>Rating:</dt>
-      <dd>{{game.rating.value + "/10 of "+game.rating.quantity+" user votes"}}</dd>
+      <dd>{{game.rating.value !== "" ? game.rating.value + "/10 of "+game.rating.quantity+" user votes" : game.rating.value}}</dd>
+      <dd> </dd>
       <dt>Thumbs:</dt>
-      <dd>{{"UP: "+ game.thumbs.up + "\n DOWN: "+ game.thumbs.down}}</dd>
+      <dd>{{"Up: "+ game.thumbs.up}}</dd>
+      <dd>{{"Down: "+ game.thumbs.down}}</dd>
+      <dd> </dd>
+      <dt>Hardware:</dt>
+      <dd *ngFor="let hr of game.hardware_req">{{hr.id + hr.value}}</dd>
+      <dd> </dd>
+      <dt>Comments:</dt>
+      <dd *ngFor="let comm of game.comments">
+        <dl id="innerList">
+          <dt>Date:</dt>
+          <dd>{{comm.date}}</dd>
+          <dt>User:</dt>
+          <dd>{{comm.login}}</dd>
+          <dt>Rank:</dt>
+          <dd>{{comm.rank}}</dd>
+          <dt>Degree:</dt>
+          <dd>{{comm.degree}}</dd>
+          <dt>Content:</dt>
+          <dd>{{comm.contents}}</dd>
+        </dl>
+      </dd>
+      <dd> </dd>
     </dl>
   </mat-card-content>
 </mat-card>

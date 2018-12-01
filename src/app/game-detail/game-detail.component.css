@@ -1,7 +1,28 @@
-.example-card {
-  max-width: 500px;
-}
 
 .button-row {
   margin: 10px 0;
 }
+dl {
+  padding: 0.5em;
+}
+dt {
+  float: left;
+  width: 120px;
+  text-align: right;
+  font-weight: bold;
+  color: #3f51b5;
+}
+dd {
+  margin: 0 0 0 130px;
+  padding: 0 0 0.5em 0;
+}
+dd + dt{
+  clear: left;
+}
+
+#innerList dt {
+  color: green;
+}
+
+/*#innerList dd {*/
+/*}*/
