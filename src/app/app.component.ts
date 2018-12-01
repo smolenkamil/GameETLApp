@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {NavigationEnd, Router} from '@angular/router';
-import {current} from 'codelyzer/util/syntaxKind';
+
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',

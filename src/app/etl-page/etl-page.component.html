@@ -1,3 +1,14 @@
-<p>
-  etl-page works!
-</p>
+
+<div class="mainP">
+  <button mat-raised-button disabled={{this.loading}}  color="warn">ETL</button>
+</div>
+<div class="button-row">
+  <button mat-raised-button disabled={{this.buttonDis[0]}} (click)="nextStage()" color="primary">Extract</button>
+  <button mat-raised-button disabled={{this.buttonDis[1]}} (click)="nextStage()" color="primary">Transform</button>
+  <button mat-raised-button disabled={{this.buttonDis[2]}} (click)="nextStage()" color="primary">Load</button>
+</div>
+
+<mat-progress-spinner  [style.visibility]="loading ? 'visible' : 'hidden'" [mode]="spinMode" ></mat-progress-spinner>
+<div class="log">
+  <mat-card-subtitle>{{stagelog}}</mat-card-subtitle>
+</div>

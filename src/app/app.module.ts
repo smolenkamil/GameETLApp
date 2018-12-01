@@ -16,6 +16,7 @@ import {
   MatTableModule,
   MatIconModule,
   MatButtonModule,
+  MatStepperModule,
   MatButtonToggleModule,
   MatCardModule,
   MatFormFieldModule } from '@angular/material';
@@ -58,6 +59,7 @@ const appRoutes: Routes = [
     BrowserAnimationsModule,
     ReactiveFormsModule,
     MatInputModule,
+    MatStepperModule,
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
