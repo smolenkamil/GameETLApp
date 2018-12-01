@@ -7,4 +7,10 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'gameETL';
+
+  tabData = [
+    { title: 'ETL Process', link: 'etl'},
+    { title: 'Game List', link: 'games'}
+  ];
+
 }

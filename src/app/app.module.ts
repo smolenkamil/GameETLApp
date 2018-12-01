@@ -18,8 +18,15 @@ import {
   MatButtonModule,
   MatCardModule,
   MatFormFieldModule } from '@angular/material';
+import { TopTabComponent } from './items/top-tab/top-tab.component';
+import { EtlPageComponent } from './etl-page/etl-page.component';
 
 const appRoutes: Routes = [
+  {
+    path: 'etl',
+    component: EtlPageComponent,
+    data: { title: 'ETL Process' }
+  },
   {
     path: 'games',
     component: GameComponent,
@@ -31,7 +38,7 @@ const appRoutes: Routes = [
     data: { title: 'Game Details' }
   },
   { path: '',
-    redirectTo: '/games',
+    redirectTo: '/etl',
     pathMatch: 'full'
   }
 ];
@@ -40,7 +47,9 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     GameComponent,
-    GameDetailComponent
+    GameDetailComponent,
+    TopTabComponent,
+    EtlPageComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes, {useHash:true}),
