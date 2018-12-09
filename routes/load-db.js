@@ -9,8 +9,8 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/test', function(req, res, next) {
-  var obj = JSON.parse(fs.readFileSync('./output.json', 'utf8'));
-  crud.test(obj[0])
+  var obj = JSON.parse(fs.readFileSync('./transform.json', 'utf8'));
+  crud.test(obj, 0)
   res.json({status: "OK test"});
 });
 

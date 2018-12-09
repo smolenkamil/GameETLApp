@@ -15,46 +15,24 @@ var config = {
 var connection = new Connection(config);
 
 module.exports = {
-  insertx: function (game, id) {
-    request = new Request('SET IDENTITY_INSERT tbl_content ON;' +
-      'INSERT INTO GRA (id_gry,tytul, platformy, kategoria, wydawca, tagi, podobne) VALUES (@Id, @Title, @Platform, @Category, @Publisher, @Tags, @Similar);',
-      function (err, rowCount, rows) {
-        if (err) {
-          console.log(err);
-        } else {
-          console.log(rowCount + ' row(s) inserted');
-        }
-      });
-    request.addParameter('Id', TYPES.Int, id);
-    request.addParameter('Title', TYPES.NVarChar, game.title);
-    request.addParameter('Platform', TYPES.NVarChar, game.platform);
-    request.addParameter('Category', TYPES.NVarChar, game.category);
-    request.addParameter('Publisher', TYPES.NVarChar, game.publisher);
-    request.addParameter('Tags', TYPES.NVarChar, " ");
-    request.addParameter('Similar', TYPES.NVarChar, " ");
+  test: function rec(game, index) {
+      request = new Request('INSERT INTO Data(dzien, miesiac, rok) VALUES (@Day, @Month, @Year);',
+        function (err, rowCount, rows)  {
+          if (err) {
+            console.log(err);
+          } else {
+            if(index >= game.length-1) console.log(index + ' row(s) inserted to Data');
+            else {
+              index++
+              rec(game, index)
+            }
+          }
+        });
+      request.addParameter('Day', TYPES.Int, game[index].date.day);
+      request.addParameter('Month', TYPES.Int, game[index].date.month);
+      request.addParameter('Year', TYPES.Int, game[index].date.year);
 
-    // Execute SQL statement
-    connection.execSql(request);
-  },
-  test: function (game) {
-    request = new Request('INSERT INTO GRA (tytul, platformy, kategoria, wydawca, tagi, podobne) VALUES (@Title, @Platform, @Category, @Publisher, @Tags, @Similar);',
-      function (err, rowCount, rows)  {
-        if (err) {
-          console.log(err);
-        } else {
-          console.log(rowCount + ' row(s) inserted');
-        }
-      });
-    request.addParameter('Title', TYPES.NVarChar, game.title);
-    request.addParameter('Platform', TYPES.NVarChar, game.platform);
-    request.addParameter('Category', TYPES.NVarChar, game.category);
-    request.addParameter('Publisher', TYPES.NVarChar, game.publisher);
-    request.addParameter('Tags', TYPES.NVarChar, " ");
-    request.addParameter('Similar', TYPES.NVarChar, " ");
-
-    // Execute SQL statement
-    connection.execSql(request);
+      // Execute SQL statement
+      connection.execSql(request);
   }
-
-
 }

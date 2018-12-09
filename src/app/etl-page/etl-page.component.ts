@@ -56,6 +56,12 @@ export class EtlPageComponent implements OnInit {
     setTimeout(()=>{
       this.stagelog ="Brace Yourself!";
     }, 1000)
+    setTimeout(()=>{
+      this.loading = false;
+      this.stagelog ="";
+      this.stage = "transform"
+      this.refreshBtns()
+    }, 2000)
     // this.api.extract()
     //   .subscribe(res => {
     //     console.log(res);
@@ -71,16 +77,17 @@ export class EtlPageComponent implements OnInit {
   transformProcess(){
     this.stagelog ="Don't think is nothing!";
     this.loading = true;
-    this.refreshBtns()
-    setTimeout(()=>{
-      this.stagelog ="Transformation becomes!";
-    }, 1000)
-    setTimeout(()=>{
-      this.loading = false;
-      this.stagelog ="";
-      this.stage = "load"
-      this.refreshBtns()
-    }, 2000)
+    this.refreshBtns();
+    this.api.transform()
+      .subscribe(res => {
+        console.log(res);
+        this.loading = false;
+        this.stagelog ="";
+        this.stage = "load"
+        this.refreshBtns()
+      }, err => {
+        console.log(err);
+      });
   }
   loadProcess(){
     this.stagelog ="Loading!";
