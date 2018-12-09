@@ -7,6 +7,9 @@ const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
 };
 const apiUrl = '/load';
+const extractUrl = '/scrap'
+const transformUrl = '/transform'
+const loadUrl = '/dbload'
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +21,24 @@ export class ApiService {
   private extractData(res: Response) {
     let body = res;
     return body || { };
+  }
+
+  extract(): Observable<any> {
+    return this.http.get(extractUrl, httpOptions).pipe(
+      map(this.extractData),
+      catchError(this.handleError));
+  }
+  transform(): Observable<any> {
+    return this.http.get(transformUrl, httpOptions).pipe(
+      map(this.extractData),
+      catchError(this.handleError));
+  }
+
+  load(command: string): Observable<any> {
+    const url = `${loadUrl}/${command}`;
+    return this.http.get(url, httpOptions).pipe(
+      map(this.extractData),
+      catchError(this.handleError));
   }
 
   getGames(): Observable<any> {
@@ -32,7 +53,6 @@ export class ApiService {
       map(this.extractData),
       catchError(this.handleError));
   }
-
 
 
   private handleError(error: HttpErrorResponse) {

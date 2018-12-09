@@ -1,18 +1,18 @@
 var express = require('express');
 var router = express.Router();
 var fs = require('fs');
+var crud = require('../database/crud.js')
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  var obj = JSON.parse(fs.readFileSync('./output.json', 'utf8'));
-  res.json(obj);
+  res.json({status: "OK"});
 });
 
-router.get('/:id', function(req, res, next) {
+router.get('/test', function(req, res, next) {
   var obj = JSON.parse(fs.readFileSync('./output.json', 'utf8'));
-  res.json(obj[req.params.id]);
+  crud.test(obj[0])
+  res.json({status: "OK test"});
 });
-
 
 module.exports = router;
 

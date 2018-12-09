@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ApiService } from '../api.service';
 
 @Component({
   selector: 'app-etl-page',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EtlPageComponent implements OnInit {
 
-  constructor() { }
+  constructor(private api: ApiService) { }
 
   stage = "extract"
 
@@ -39,6 +40,15 @@ export class EtlPageComponent implements OnInit {
   ngOnInit() {
   }
 
+  test(){
+    this.api.load('test')
+      .subscribe(res => {
+        console.log(res);
+      }, err => {
+        console.log(err);
+      });
+  }
+
   extractProcess(){
     this.stagelog ="Commiting extraction!";
     this.loading = true;
@@ -46,12 +56,17 @@ export class EtlPageComponent implements OnInit {
     setTimeout(()=>{
       this.stagelog ="Brace Yourself!";
     }, 1000)
-    setTimeout(()=>{
-      this.loading = false;
-      this.stagelog ="";
-      this.stage = "transform"
-      this.refreshBtns()
-    }, 2000)
+    // this.api.extract()
+    //   .subscribe(res => {
+    //     console.log(res);
+    //       this.loading = false;
+    //       this.stagelog ="";
+    //       this.stage = "transform"
+    //       this.refreshBtns()
+    //   }, err => {
+    //     console.log(err);
+    //   });
+
   }
   transformProcess(){
     this.stagelog ="Don't think is nothing!";

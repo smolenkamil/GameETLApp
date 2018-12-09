@@ -6,6 +6,9 @@ var logger = require('morgan');
 
 var scrapRouter = require('./routes/scrap-games');
 var loadRouter = require('./routes/load-games');
+var transformRouter = require('./routes/transform');
+var dbload = require('./routes/load-db');
+
 
 var app = express();
 
@@ -16,6 +19,8 @@ app.use(express.static(path.join(__dirname, 'dist/gameETL')));
 app.use('/', express.static(path.join(__dirname, 'dist/gameETL')));
 app.use('/scrap', scrapRouter);
 app.use('/load', loadRouter);
+app.use('/transform', transformRouter);
+app.use('/dbload', dbload);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
