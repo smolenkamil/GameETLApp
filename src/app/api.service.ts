@@ -10,6 +10,7 @@ const apiUrl = '/load';
 const extractUrl = '/scrap'
 const transformUrl = '/transform'
 const loadUrl = '/dbload'
+const consoleUrl = '/console'
 
 @Injectable({
   providedIn: 'root'
@@ -50,6 +51,12 @@ export class ApiService {
   getGame(id: string): Observable<any> {
     const url = `${apiUrl}/${id}`;
     return this.http.get(url, httpOptions).pipe(
+      map(this.extractData),
+      catchError(this.handleError));
+  }
+
+  getConsoleMessages(): Observable<any> {
+    return this.http.get(consoleUrl, httpOptions).pipe(
       map(this.extractData),
       catchError(this.handleError));
   }

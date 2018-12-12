@@ -21,6 +21,8 @@ import {
   MatCardModule,
   MatFormFieldModule } from '@angular/material';
 import { EtlPageComponent } from './etl-page/etl-page.component';
+import { ConsoleComponent } from './etl-page/console/console.component';
+import { LineComponent } from './etl-page/console/line/line.component';
 
 const appRoutes: Routes = [
   {
@@ -49,7 +51,9 @@ const appRoutes: Routes = [
     AppComponent,
     GameComponent,
     GameDetailComponent,
-    EtlPageComponent
+    EtlPageComponent,
+    ConsoleComponent,
+    LineComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes, {useHash:true}),

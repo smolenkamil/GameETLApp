@@ -8,6 +8,7 @@ var scrapRouter = require('./routes/scrap-games');
 var loadRouter = require('./routes/load-games');
 var transformRouter = require('./routes/transform');
 var dbload = require('./routes/load-db');
+var console = require('./routes/console');
 
 
 var app = express();
@@ -21,6 +22,7 @@ app.use('/scrap', scrapRouter);
 app.use('/load', loadRouter);
 app.use('/transform', transformRouter);
 app.use('/dbload', dbload);
+app.use('/console', console);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

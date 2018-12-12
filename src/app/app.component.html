@@ -3,7 +3,7 @@
     <mat-card-title id="title">{{currentTitle}}</mat-card-title>
   </div>
   <mat-button-toggle-group name="menu" aria-label="Font Style" value="{{currentUrl}}">
-    <mat-button-toggle [routerLink]="['/etl']" value="/etl">ETL Process</mat-button-toggle>
+    <mat-button-toggle  [routerLink]="['/etl']" value="/etl">ETL Process</mat-button-toggle>
     <mat-button-toggle [routerLink]="['/games']" value="/games">Game List</mat-button-toggle>
   </mat-button-toggle-group>
 <router-outlet></router-outlet>

@@ -6,26 +6,36 @@ var encoding = 'win1250';
 var request = require('request');
 var cheerio = require('cheerio');
 var mainData = []
+var consolex = require('./console-writer')
 
 
 router.get('/', function(req, res, next){
+  consolex.showTxt("")
+  consolex.showTxt("  |EXTRACT - START|")
   req.setTimeout(900000);
   url = 'https://www.gry-online.pl/daty-premier-gier.asp';
+  consolex.showTxt("Started data scrapping from " + url)
 
   getDataFromMain(url).then((data) => {
+    consolex.showTxt("Start scrapping page after page!")
     var allPs = []
     for (let i = 0, p = Promise.resolve(); i < data.length-1; i++) {
       p = p.then(_ => getDataFromSubPage('https://www.gry-online.pl' + data[i],Math.floor((i/data.length)*10000)/100));
       allPs.push(p)
     }
     Promise.all(allPs).then(function(values) {
+      consolex.showTxt("-- Scrapping progress: 100%")
+      consolex.showTxt("Scrapping finished! Start merging informations")
       var finish = []
       for(var x=0;x<values.length;x++){
         finish.push(Object.assign({},mainData[x],values[x]))
       }
+      consolex.showTxt("Merge successful!")
       fs.writeFile('output.json', JSON.stringify(finish), function(err){
         console.log('File successfully written! - Check your project directory for the output.json file');
+        consolex.showTxt("File successfully written! - output.json!")
       })
+      consolex.showTxt("  |EXTRACT - END|")
       res.send(finish)
     })
   })
@@ -179,6 +189,7 @@ function retrieveDataFromHtml(html,proc){
       }
       json.comments = commentArr
       console.log("PROGRESS: " + proc + "%")
+      consolex.showTxt("-- Scrapping progress: "+ proc+"%")
       resolve(json)
     })
   }))
@@ -189,8 +200,10 @@ function retrieveDataFromHtml(html,proc){
 function getDataFromMain(url){
   return new Promise(((resolve, reject) => {
     request({url:url, encoding:null}, function(error, response, html){
+      consolex.showTxt("Scrapping from main page!")
       if(!error){
         var htmlx = iconv.decode(html,encoding);
+        consolex.showTxt("Main page encoding!")
         var $ = cheerio.load(htmlx,{ decodeEntities: false });
         var json = [];
         var links = []
@@ -230,6 +243,7 @@ function getDataFromMain(url){
           });
         })
       }
+      consolex.showTxt("Found "+ links.length+" games!")
       mainData = Object.assign({},json)
       resolve(links)
     })
@@ -237,5 +251,5 @@ function getDataFromMain(url){
 }
 
 
-console.log('So it begins');
+consolex.showTxt("Ready!")
 module.exports = router;

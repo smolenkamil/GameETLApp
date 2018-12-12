@@ -1,9 +1,12 @@
 var express = require('express');
 var router = express.Router();
 var fs = require('fs');
+var consolex = require('./console-writer')
 
 
 router.get('/', function(req, res, next) {
+  consolex.showTxt("")
+  consolex.showTxt("  |TRANSFORM - START|")
   var obj = JSON.parse(fs.readFileSync('./output.json', 'utf8'));
 
   for(var i=0;i<obj.length;i++){
@@ -16,9 +19,18 @@ router.get('/', function(req, res, next) {
     obj[i].comments = formatComments(obj[i].comments)
   }
 
+  consolex.showTxt("Date formatted for "+obj.length+" games!")
+  consolex.showTxt("Rating formatted for "+obj.length+" games!")
+  consolex.showTxt("Thumbs formatted for "+obj.length+" games!")
+  consolex.showTxt("Tags formatted for "+obj.length+" games!")
+  consolex.showTxt("Similar formatted for "+obj.length+" games!")
+  consolex.showTxt("Hardware requirements formatted for "+obj.length+" games!")
+  consolex.showTxt("Comments formatted for "+obj.length+" games!")
+
   fs.writeFile('transform.json', JSON.stringify(obj), function(err){
-    console.log('File successfully written! - Check your project directory for the transform.json file');
+    consolex.showTxt("File successfully written! - transform.json")
   })
+  consolex.showTxt("  |TRANSFORM - END|")
   res.json(obj);
 });
 

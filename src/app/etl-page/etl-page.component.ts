@@ -8,6 +8,8 @@ import { ApiService } from '../api.service';
 })
 export class EtlPageComponent implements OnInit {
 
+  consoleMessages = ["---"]
+
   constructor(private api: ApiService) { }
 
   stage = "extract"
@@ -38,6 +40,22 @@ export class EtlPageComponent implements OnInit {
   }
 
   ngOnInit() {
+    setInterval(()=>{
+      this.api.getConsoleMessages()
+        .subscribe(res => {
+          console.log(res);
+          var tmp = res.messages
+          for(var i=0;i<tmp.length;i++){
+            console.log("ddd"+ i)
+            if(this.consoleMessages[0].startsWith("--") && tmp[i].startsWith("--"))
+              this.consoleMessages[0] = tmp[i]
+            else
+              this.consoleMessages.unshift(tmp[i])
+          }
+        }, err => {
+          console.log(err);
+        });
+    },2000)
   }
 
   test(){
@@ -53,25 +71,25 @@ export class EtlPageComponent implements OnInit {
     this.stagelog ="Commiting extraction!";
     this.loading = true;
     this.refreshBtns()
-    setTimeout(()=>{
-      this.stagelog ="Brace Yourself!";
-    }, 1000)
-    setTimeout(()=>{
-      this.loading = false;
-      this.stagelog ="";
-      this.stage = "transform"
-      this.refreshBtns()
-    }, 2000)
-    // this.api.extract()
-    //   .subscribe(res => {
-    //     console.log(res);
-    //       this.loading = false;
-    //       this.stagelog ="";
-    //       this.stage = "transform"
-    //       this.refreshBtns()
-    //   }, err => {
-    //     console.log(err);
-    //   });
+    // setTimeout(()=>{
+    //   this.stagelog ="Brace Yourself!";
+    // }, 1000)
+    // setTimeout(()=>{
+    //   this.loading = false;
+    //   this.stagelog ="";
+    //   this.stage = "transform"
+    //   this.refreshBtns()
+    // }, 2000)
+    this.api.extract()
+      .subscribe(res => {
+        console.log(res);
+          this.loading = false;
+          this.stagelog ="";
+          this.stage = "transform"
+          this.refreshBtns()
+      }, err => {
+        console.log(err);
+      });
 
   }
   transformProcess(){

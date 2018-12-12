@@ -1,0 +1,15 @@
+var express = require('express');
+var router = express.Router();
+
+var messages = ["---"]
+
+module.exports = {
+  showTxt: function showMessage(text){
+    messages.push(text)
+  },
+  getAllMessages(){
+    var tmp = messages
+    messages = []
+    return tmp
+  }
+}

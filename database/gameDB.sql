@@ -1,3 +1,4 @@
+
 -- Create tables section -------------------------------------------------
 
 -- Table Encyklopedia_Gier
@@ -5,73 +6,74 @@
 CREATE TABLE [Encyklopedia_Gier]
 (
  [id_gry] Int NOT NULL,
- [id_czasu] Int NOT NULL,
+ [id_czasu_premiery] Int NOT NULL,
  [id_wym] Int NOT NULL,
- [id_oceny] Int NOT NULL,
- [id_postu] Int NOT NULL
+ [id_posta] Int NOT NULL,
+ [id_czasu_posta] Int NOT NULL,
+ [id_lapki] Int NOT NULL,
+ [id_podobne] Int NOT NULL,
+ [id_tagi] Int NOT NULL
 )
 go
 
 -- Add keys for table Encyklopedia_Gier
 
-ALTER TABLE [Encyklopedia_Gier] ADD CONSTRAINT [Key1] PRIMARY KEY ([id_wym],[id_oceny],[id_postu],[id_gry],[id_czasu])
+ALTER TABLE [Encyklopedia_Gier] ADD CONSTRAINT [Key1] PRIMARY KEY ([id_wym],[id_posta],[id_gry],[id_czasu_premiery],[id_czasu_posta],[id_lapki],[id_podobne],[id_tagi])
 go
 
 -- Table Gra
 
 CREATE TABLE [Gra]
 (
- [id_gry] Int IDENTITY(1,1) NOT NULL,
- [id_czasu] Int NOT NULL,
- [tytul] Varchar(50) NULL,
- [platformy] Varchar(50) NULL,
- [kategoria] Varchar(50) NULL,
- [wydawca] Varchar(50) NULL,
- [tagi] Varchar(50) NULL,
- [podobne] Varchar(50) NULL
+ [id_gry] Int IDENTITY NOT NULL,
+ [id_czasu_premiery] Int NOT NULL,
+ [tytul] Varchar(200) NULL,
+ [producent] Varchar(200) NULL,
+ [platformy] Varchar(200) NULL,
+ [kategoria] Varchar(200) NULL,
+ [wydawca] Varchar(200) NULL,
+ [srednia_ocen] Float NULL,
+ [ilosc_ocen] Int NULL
 )
 go
 
 -- Add keys for table Gra
 
-ALTER TABLE [Gra] ADD CONSTRAINT [Key2] PRIMARY KEY ([id_gry],[id_czasu])
+ALTER TABLE [Gra] ADD CONSTRAINT [Key2] PRIMARY KEY ([id_gry],[id_czasu_premiery])
 go
 
--- Table Data
+-- Table Data_premiery
 
-CREATE TABLE [Data]
+CREATE TABLE [Data_premiery]
 (
- [id_czasu] Int IDENTITY NOT NULL,
+ [id_czasu_premiery] Int IDENTITY NOT NULL,
  [dzien] Int NULL,
  [miesiac] Int NULL,
  [rok] Int NULL
 )
 go
 
--- Add keys for table Data
+-- Add keys for table Data_premiery
 
-ALTER TABLE [Data] ADD CONSTRAINT [Key3] PRIMARY KEY ([id_czasu])
+ALTER TABLE [Data_premiery] ADD CONSTRAINT [Key3] PRIMARY KEY ([id_czasu_premiery])
 go
 
--- Table Oceny
+-- Table Data_posta
 
-CREATE TABLE [Oceny]
+CREATE TABLE [Data_posta]
 (
- [id_oceny] Int IDENTITY NOT NULL,
- [wartosc] Varchar(50) NULL,
- [ilosc_ocen] Int NULL,
- [id_lapki] Int NULL
+ [id_czasu_posta] Int IDENTITY NOT NULL,
+ [dzien] Int NULL,
+ [miesiac] Int NULL,
+ [rok] Int NULL,
+ [godzina] Int NULL,
+ [minuta] Int NULL
 )
 go
 
--- Create indexes for table Oceny
+-- Add keys for table Data_posta
 
-CREATE INDEX [IX_Relationship19] ON [Oceny] ([id_lapki])
-go
-
--- Add keys for table Oceny
-
-ALTER TABLE [Oceny] ADD CONSTRAINT [Key4] PRIMARY KEY ([id_oceny])
+ALTER TABLE [Data_posta] ADD CONSTRAINT [Key3] PRIMARY KEY ([id_czasu_posta])
 go
 
 -- Table Lapki
@@ -94,19 +96,9 @@ go
 CREATE TABLE [Wymagania_sprzetowe]
 (
  [id_wym] Int IDENTITY NOT NULL,
- [id_platformy] Int NULL,
  [rekomendowane] Varchar(200) NULL,
- [minimalne] Varchar(200) NULL,
- [id_rek] Int NULL
+ [minimalne] Varchar(200) NULL
 )
-go
-
--- Create indexes for table Wymagania_sprzetowe
-
-CREATE INDEX [IX_Relationship16] ON [Wymagania_sprzetowe] ([id_platformy])
-go
-
-CREATE INDEX [IX_Relationship17] ON [Wymagania_sprzetowe] ([id_rek])
 go
 
 -- Add keys for table Wymagania_sprzetowe
@@ -114,89 +106,85 @@ go
 ALTER TABLE [Wymagania_sprzetowe] ADD CONSTRAINT [Key6] PRIMARY KEY ([id_wym])
 go
 
--- Table platforma
-
-CREATE TABLE [platforma]
-(
- [id_platformy] Int IDENTITY NOT NULL,
- [nazwa_platformy] Varchar(50) NULL
-)
-go
-
--- Add keys for table platforma
-
-ALTER TABLE [platforma] ADD CONSTRAINT [Key7] PRIMARY KEY ([id_platformy])
-go
-
--- Table Rekomendacje
-
-CREATE TABLE [Rekomendacje]
-(
- [id_rek] Int IDENTITY NOT NULL,
- [nazwa_komputera] Varchar(50) NULL,
- [karta_graficzna] Varchar(50) NULL,
- [procesor] Varchar(50) NULL,
- [ram] Varchar(50) NULL,
- [matryca] Varchar(50) NULL,
- [dysk] Varchar(50) NULL
-)
-go
-
--- Add keys for table Rekomendacje
-
-ALTER TABLE [Rekomendacje] ADD CONSTRAINT [Key8] PRIMARY KEY ([id_rek])
-go
-
 -- Table Posty
 
 CREATE TABLE [Posty]
 (
- [id_postu] Int IDENTITY NOT NULL,
- [id_czasu] Int NULL,
+ [id_posta] Int IDENTITY NOT NULL,
+ [id_czasu_posta] Int NOT NULL,
  [login] Varchar(200) NULL,
  [ranga] Int NULL,
- [stopien] Varchar(50) NULL,
+ [stopien] Varchar(200) NULL,
  [tresc] Varchar(max) NULL
 )
 go
 
--- Create indexes for table Posty
-
-CREATE INDEX [IX_Relationship21] ON [Posty] ([id_czasu])
-go
-
 -- Add keys for table Posty
 
-ALTER TABLE [Posty] ADD CONSTRAINT [Key9] PRIMARY KEY ([id_postu])
+ALTER TABLE [Posty] ADD CONSTRAINT [Key9] PRIMARY KEY ([id_posta],[id_czasu_posta])
 go
 
--- Create relationships section -------------------------------------------------
+-- Table Podobne
 
-ALTER TABLE [Wymagania_sprzetowe] ADD CONSTRAINT [R6] FOREIGN KEY ([id_platformy]) REFERENCES [platforma] ([id_platformy]) ON UPDATE NO ACTION ON DELETE NO ACTION
+CREATE TABLE [Podobne]
+(
+ [id_podobne] Int IDENTITY NOT NULL,
+ [podobne] Varchar(max) NULL
+)
 go
 
-ALTER TABLE [Wymagania_sprzetowe] ADD CONSTRAINT [R7] FOREIGN KEY ([id_rek]) REFERENCES [Rekomendacje] ([id_rek]) ON UPDATE NO ACTION ON DELETE NO ACTION
+-- Add keys for table Podobne
+
+ALTER TABLE [Podobne] ADD CONSTRAINT [PK_Podobne] PRIMARY KEY ([id_podobne])
 go
+
+-- Table Tagi
+
+CREATE TABLE [Tagi]
+(
+ [id_tagi] Int IDENTITY NOT NULL,
+ [tagi] Varchar(200) NULL
+)
+go
+
+-- Add keys for table Tagi
+
+ALTER TABLE [Tagi] ADD CONSTRAINT [PK_Tagi] PRIMARY KEY ([id_tagi])
+go
+
+-- Create foreign keys (relationships) section -------------------------------------------------
+
 
 ALTER TABLE [Encyklopedia_Gier] ADD CONSTRAINT [R2] FOREIGN KEY ([id_wym]) REFERENCES [Wymagania_sprzetowe] ([id_wym]) ON UPDATE NO ACTION ON DELETE NO ACTION
 go
 
-ALTER TABLE [Oceny] ADD CONSTRAINT [R8] FOREIGN KEY ([id_lapki]) REFERENCES [Lapki] ([id_lapki]) ON UPDATE NO ACTION ON DELETE NO ACTION
+
+ALTER TABLE [Encyklopedia_Gier] ADD CONSTRAINT [R4] FOREIGN KEY ([id_posta], [id_czasu_posta]) REFERENCES [Posty] ([id_posta], [id_czasu_posta]) ON UPDATE NO ACTION ON DELETE NO ACTION
 go
 
-ALTER TABLE [Encyklopedia_Gier] ADD CONSTRAINT [R3] FOREIGN KEY ([id_oceny]) REFERENCES [Oceny] ([id_oceny]) ON UPDATE NO ACTION ON DELETE NO ACTION
+
+ALTER TABLE [Gra] ADD CONSTRAINT [R5] FOREIGN KEY ([id_czasu_premiery]) REFERENCES [Data_premiery] ([id_czasu_premiery]) ON UPDATE NO ACTION ON DELETE NO ACTION
 go
 
-ALTER TABLE [Posty] ADD CONSTRAINT [R9] FOREIGN KEY ([id_czasu]) REFERENCES [Data] ([id_czasu]) ON UPDATE NO ACTION ON DELETE NO ACTION
+
+ALTER TABLE [Encyklopedia_Gier] ADD CONSTRAINT [R1] FOREIGN KEY ([id_gry], [id_czasu_premiery]) REFERENCES [Gra] ([id_gry], [id_czasu_premiery]) ON UPDATE NO ACTION ON DELETE NO ACTION
 go
 
-ALTER TABLE [Encyklopedia_Gier] ADD CONSTRAINT [R4] FOREIGN KEY ([id_postu]) REFERENCES [Posty] ([id_postu]) ON UPDATE NO ACTION ON DELETE NO ACTION
+
+ALTER TABLE [Posty] ADD CONSTRAINT [R6] FOREIGN KEY ([id_czasu_posta]) REFERENCES [Data_posta] ([id_czasu_posta]) ON UPDATE NO ACTION ON DELETE NO ACTION
 go
 
-ALTER TABLE [Gra] ADD CONSTRAINT [R5] FOREIGN KEY ([id_czasu]) REFERENCES [Data] ([id_czasu]) ON UPDATE NO ACTION ON DELETE NO ACTION
+
+ALTER TABLE [Encyklopedia_Gier] ADD CONSTRAINT [R8] FOREIGN KEY ([id_lapki]) REFERENCES [Lapki] ([id_lapki]) ON UPDATE NO ACTION ON DELETE NO ACTION
 go
 
-ALTER TABLE [Encyklopedia_Gier] ADD CONSTRAINT [R1] FOREIGN KEY ([id_gry], [id_czasu]) REFERENCES [Gra] ([id_gry], [id_czasu]) ON UPDATE NO ACTION ON DELETE NO ACTION
+
+ALTER TABLE [Encyklopedia_Gier] ADD CONSTRAINT [R3] FOREIGN KEY ([id_podobne]) REFERENCES [Podobne] ([id_podobne]) ON UPDATE NO ACTION ON DELETE NO ACTION
 go
+
+
+ALTER TABLE [Encyklopedia_Gier] ADD CONSTRAINT [R7] FOREIGN KEY ([id_tagi]) REFERENCES [Tagi] ([id_tagi]) ON UPDATE NO ACTION ON DELETE NO ACTION
+go
+
 
 
