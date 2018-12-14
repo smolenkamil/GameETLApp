@@ -10,6 +10,7 @@ var transformRouter = require('./routes/transform');
 var dbload = require('./routes/load-db');
 var console = require('./routes/console');
 var exportCSV = require('./routes/export-to-csv')
+var deleteData = require('./routes/delete')
 
 
 var app = express();
@@ -25,6 +26,7 @@ app.use('/transform', transformRouter);
 app.use('/dbload', dbload);
 app.use('/console', console);
 app.use('/export', exportCSV);
+app.use('/delete', deleteData);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

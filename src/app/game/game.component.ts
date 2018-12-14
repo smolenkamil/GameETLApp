@@ -38,27 +38,43 @@ export class GameComponent implements OnInit {
     },500)
   }
   exportToFile(){
-    this.api.export('all')
-      .subscribe(res => {
-        console.log(res);
-        this.openSnackBar("Games succesfully exported!",'./export/games.csv')
-        this.exportComments()
-      }, err => {
-        console.log(err);
-      });
+    setTimeout(()=>{
+      this.api.export('all')
+        .subscribe(res => {
+          console.log(res);
+          this.openSnackBar("Games succesfully exported!",'./export/games.csv')
+          this.exportComments()
+        }, err => {
+          console.log(err);
+        });
+    },500)
 
 
   }
 
-  exportComments(){
-    this.api.export('comments')
-      .subscribe(res => {
-        console.log(res);
-        this.openSnackBar("Comments succesfully exported!",'./export/comments.csv')
-      }, err => {
-        console.log(err);
-      });
+  deleteData(){
+    setTimeout(()=>{
+      this.api.deleteAllData()
+        .subscribe(res => {
+          console.log(res);
+          this.openSnackBar("All data deleted!",'There is nothing left')
+        }, err => {
+          console.log(err);
+        });
+    },500)
+  }
 
+
+  exportComments(){
+    setTimeout(()=>{
+      this.api.export('comments')
+        .subscribe(res => {
+          console.log(res);
+          this.openSnackBar("Comments succesfully exported!",'./export/comments.csv')
+        }, err => {
+          console.log(err);
+        });
+    },500)
   }
 
 

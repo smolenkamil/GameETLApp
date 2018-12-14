@@ -48,7 +48,24 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/:id', function(req, res, next) {
-  gra()
+  var idki = []
+
+  request = new Request('select id_gry from Gra;',
+    function (err, rowCount, rows)  {
+      if (err) {
+        console.log(err);
+      } else {
+        gra()
+      }
+
+    });
+  request.on('row', function(columns) {
+    idki.push(columns[0].value)
+  });
+  // Execute SQL statement
+  connection.execSql(request);
+
+
 
   function gra() {
     var obj = {
@@ -87,7 +104,7 @@ router.get('/:id', function(req, res, next) {
         }
 
       });
-    request.addParameter('GameId', TYPES.Int, req.params.id);
+    request.addParameter('GameId', TYPES.Int, idki[req.params.id-1]);
     request.on('row', function(columns) {
       obj.game_id = columns[0].value
       obj.title = columns[1].value

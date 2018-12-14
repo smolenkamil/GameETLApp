@@ -1,4 +1,7 @@
-<div style="width: 100%; height: 50px; position: relative;"><a class="export" mat-raised-button color="primary" (click)="exportToFile()" ><mat-icon>input</mat-icon> Export to CSV</a></div>
+<div style="width: 100%; height: 50px; position: relative;">
+  <a class="next" mat-raised-button color="primary" (click)="deleteData()" ><mat-icon>input</mat-icon> Delete all data</a>
+  <a class="export" mat-raised-button color="primary" (click)="exportToFile()" ><mat-icon>input</mat-icon> Export to CSV</a>
+</div>
 <div class="example-container mat-elevation-z8">
   <table mat-table #table [dataSource]="dataSource">
 

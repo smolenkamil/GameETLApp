@@ -115,10 +115,10 @@ export class EtlPageComponent implements OnInit {
     this.api.extract()
       .subscribe(res => {
         console.log(res);
-          this.loading = false;
-          this.stagelog ="";
-          this.stage = "transform"
-          this.refreshBtns()
+        this.loading = false;
+        this.stagelog ="";
+        this.stage = "transform"
+        this.refreshBtns()
       }, err => {
         console.log(err);
       });
@@ -128,32 +128,35 @@ export class EtlPageComponent implements OnInit {
     this.stagelog ="Don't think is nothing!";
     this.loading = true;
     this.refreshBtns();
-    this.api.transform()
-      .subscribe(res => {
-        console.log(res);
-        this.loading = false;
-        this.stagelog ="";
-        this.stage = "load"
-        this.refreshBtns()
-      }, err => {
-        console.log(err);
-      });
+    setTimeout(()=>{
+      this.api.transform()
+        .subscribe(res => {
+          console.log(res);
+          this.loading = false;
+          this.stagelog ="";
+          this.stage = "load"
+          this.refreshBtns()
+        }, err => {
+          console.log(err);
+        });
+    },500)
   }
   loadProcess(){
     this.stagelog ="Loading!";
     this.loading = true;
     this.refreshBtns()
-    this.api.load('load')
-      .subscribe(res => {
-        console.log(res);
-        this.loading = false;
-        this.stagelog ="";
-        this.stage = "extract"
-        this.refreshBtns()
-      }, err => {
-        console.log(err);
-      });
-
+    setTimeout(()=>{
+      this.api.load('load')
+        .subscribe(res => {
+          console.log(res);
+          this.loading = false;
+          this.stagelog ="";
+          this.stage = "extract"
+          this.refreshBtns()
+        }, err => {
+          console.log(err);
+        });
+    },500)
 
   }
 

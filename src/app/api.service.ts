@@ -12,6 +12,7 @@ const transformUrl = '/transform'
 const loadUrl = '/dbload'
 const consoleUrl = '/console'
 const exportUrl = '/export'
+const deleteUrl = '/delete'
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +25,13 @@ export class ApiService {
     let body = res;
     return body || { };
   }
+
+  deleteAllData(): Observable<any> {
+    return this.http.get(deleteUrl, httpOptions).pipe(
+      map(this.extractData),
+      catchError(this.handleError));
+  }
+
 
   export(command: string): Observable<any> {
     const url = `${exportUrl}/${command}`;

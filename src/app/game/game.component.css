@@ -33,3 +33,9 @@
   right: 0px;
 
 }
+
+.next{
+  position: absolute;
+  top: 0px;
+  right: 150px;
+}

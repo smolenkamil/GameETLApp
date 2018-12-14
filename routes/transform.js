@@ -10,15 +10,18 @@ router.get('/', function(req, res, next) {
   var obj = JSON.parse(fs.readFileSync('./output.json', 'utf8'));
 
   for(var i=0;i<obj.length;i++){
+    obj[i].title = formatTitle(obj[i].title)
+    obj[i].category = signsConvertion(obj[i].category)
     obj[i].date = formatDate(obj[i].date)
     obj[i].rating = formatRating(obj[i].rating)
     obj[i].thumbs = formatThumbs(obj[i].thumbs)
-    // obj[i].tags = arrToStr(obj[i].tags)
-    // obj[i].similar = arrToStr(obj[i].similar)
+    obj[i].tags = formatArr(obj[i].tags)
+    obj[i].similar = formatArr(obj[i].similar)
     obj[i].hardware_req = formatHardwareReq(obj[i].hardware_req)
     obj[i].comments = formatComments(obj[i].comments)
   }
 
+  consolex.showTxt("Title formatted for "+obj.length+" games!")
   consolex.showTxt("Date formatted for "+obj.length+" games!")
   consolex.showTxt("Rating formatted for "+obj.length+" games!")
   consolex.showTxt("Thumbs formatted for "+obj.length+" games!")
@@ -33,6 +36,31 @@ router.get('/', function(req, res, next) {
   consolex.showTxt("  |TRANSFORM - END|")
   res.json(obj);
 });
+
+
+function signsConvertion(text){
+  text = text.replace(/ę/ig,'e');
+  text = text.replace(/ż/ig,'z');
+  text = text.replace(/ó/ig,'o');
+  text = text.replace(/ł/ig,'l');
+  text = text.replace(/ć/ig,'c');
+  text = text.replace(/ś/ig,'s');
+  text = text.replace(/ź/ig,'z');
+  text = text.replace(/ń/ig,'n');
+  text = text.replace(/ą/ig,'a');
+  return text
+
+}
+
+
+
+
+function formatTitle(title){
+  var tmp = title.split(" ");
+  tmp.splice(tmp.length-1,1)
+  return signsConvertion(tmp.join(" "))
+}
+
 
 function formatComments(comments){
   for(var i=0;i<comments.length;i++){
@@ -53,21 +81,19 @@ function formatComments(comments){
     newDate.minute = parseInt(entitiesT[1])
     comments[i].date = newDate
     comments[i].rank = parseInt(comments[i].rank)
+    comments[i].degree = signsConvertion(comments[i].degree)
     var tmp = comments[i].contents.split("\n")
-    comments[i].contents = tmp.join(" ").substr(0,7999)
+    comments[i].contents = signsConvertion(tmp.join(" ").substr(0,7999))
   }
   return comments
 }
 
 
-
-function arrToStr(arr){
-  var str = ""
+function formatArr(arr){
   for(var i=0;i<arr.length;i++){
-    if(i===arr.length-1) { str += arr[i]; break; }
-    str += arr[i] + ", ";
+    arr[i]=signsConvertion(arr[i])
   }
-  return str
+  return arr
 }
 
 

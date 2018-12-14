@@ -20,12 +20,12 @@ router.get('/load', function(req, res, next) {
     if(crud.finish){
       crud.finish = false;
       clearInterval(timer);
-      fs.unlink('../output.json', (err) => {
+      fs.unlink('output.json', (err) => {
         if (err) throw err;
         console.log('output.json was deleted');
       });
 
-      fs.unlink('../transform.json', (err) => {
+      fs.unlink('transform.json', (err) => {
         if (err) throw err;
         console.log('transform.json was deleted');
       });
@@ -33,6 +33,7 @@ router.get('/load', function(req, res, next) {
     }
   },1000)
 });
+
 
 module.exports = router;
 
