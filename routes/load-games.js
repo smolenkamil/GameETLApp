@@ -297,6 +297,11 @@ router.get('/:id', function(req, res, next) {
     connection.execSql(request);
   }
   function data_posta(game, index_posta) {
+    var check = game.comments.length>0
+    if(!check) {
+      res.json(game);
+      return
+    }
     request = new Request('select dzien,miesiac,rok,godzina,minuta from Data_posta where id_czasu_posta = @DateId;',
       function (err, rowCount, rows)  {
         if (err) {

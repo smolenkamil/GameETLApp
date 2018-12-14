@@ -254,6 +254,10 @@ function wymagania_sprzetowe(game,game_index){
 
 function posty(game,game_index,index_posta){
   var check = game[game_index].comments.length>0
+  if(!check) {
+    wymagania_sprzetowe(game,game_index);
+    return
+  }
   request = new Request('if not exists (select id_posta from Posty where login = @Login and ranga = @Rank and stopien = @Degree and tresc = @Contents)\n' +
     'begin\n' +
     'insert into Posty(id_gry,id_czasu_posta,login,ranga,stopien,tresc)  \n' +
@@ -334,6 +338,10 @@ function gra(game,game_index){
 
 function data_posta(game,game_index, index_posta){
   var check = game[game_index].comments.length>0
+  if(!check) {
+    gra(game,game_index);
+    return
+  }
   request = new Request('' +
     'if not exists (select * from Data_posta where dzien = @Day and miesiac = @Month and rok = @Year and godzina = @Hour and minuta = @Minute)\n' +
     'begin\n' +
