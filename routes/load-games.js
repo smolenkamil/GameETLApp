@@ -239,23 +239,6 @@ router.get('/:id', function(req, res, next) {
         if (err) {
           console.log(err);
         } else {
-          res.json(game);
-        }
-      });
-    request.addParameter('ThumbsId', TYPES.Int, game.thumbs_id);
-    request.on('row', function(columns) {
-      game.thumbs.up = columns[0].value;
-      game.thumbs.down = columns[1].value;
-    });
-    // Execute SQL statement
-    connection.execSql(request);
-  }
-  function lapki(game) {
-    request = new Request('select w_gore,w_dol from Lapki where id_lapki = @ThumbsId;',
-      function (err, rowCount, rows)  {
-        if (err) {
-          console.log(err);
-        } else {
           posty(game);
         }
       });

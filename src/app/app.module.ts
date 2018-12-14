@@ -18,6 +18,7 @@ import {
   MatButtonModule,
   MatStepperModule,
   MatButtonToggleModule,
+  MatSnackBarModule,
   MatCardModule,
   MatFormFieldModule } from '@angular/material';
 import { EtlPageComponent } from './etl-page/etl-page.component';
@@ -66,6 +67,7 @@ const appRoutes: Routes = [
     MatStepperModule,
     MatTableModule,
     MatPaginatorModule,
+    MatSnackBarModule,
     MatSortModule,
     MatButtonToggleModule,
     MatProgressSpinnerModule,

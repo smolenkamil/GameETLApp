@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../api.service';
 import { DataSource } from '@angular/cdk/collections';
 import { Observable } from 'rxjs';
+import {MatSnackBar} from '@angular/material';
 
 @Component({
   selector: 'app-game',
@@ -15,7 +16,15 @@ export class GameComponent implements OnInit {
   displayedColumns = ['title', 'category', 'producer', 'publisher'];
   dataSource = new GameDataSource(this.api);
 
-  constructor(private api: ApiService) { }
+  constructor(private api: ApiService,public snackBar: MatSnackBar) { }
+
+
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 2000,
+    });
+  }
+
 
   ngOnInit() {
     setTimeout(()=>{
@@ -28,6 +37,31 @@ export class GameComponent implements OnInit {
         });
     },500)
   }
+  exportToFile(){
+    this.api.export('all')
+      .subscribe(res => {
+        console.log(res);
+        this.openSnackBar("Games succesfully exported!",'./export/games.csv')
+        this.exportComments()
+      }, err => {
+        console.log(err);
+      });
+
+
+  }
+
+  exportComments(){
+    this.api.export('comments')
+      .subscribe(res => {
+        console.log(res);
+        this.openSnackBar("Comments succesfully exported!",'./export/comments.csv')
+      }, err => {
+        console.log(err);
+      });
+
+  }
+
+
 
 }
 

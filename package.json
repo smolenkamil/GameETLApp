@@ -30,6 +30,7 @@
     "hammerjs": "^2.0.8",
     "http-errors": "^1.7.1",
     "iconv-lite": "^0.4.24",
+    "json2csv": "^4.3.2",
     "morgan": "^1.9.1",
     "request": "^2.88.0",
     "rxjs": "^6.0.0",

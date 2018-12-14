@@ -26,3 +26,10 @@
 .mat-row{
   cursor: pointer;
 }
+
+.export{
+  position: absolute;
+  top: 0px;
+  right: 0px;
+
+}

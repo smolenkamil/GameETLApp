@@ -9,6 +9,7 @@ var loadRouter = require('./routes/load-games');
 var transformRouter = require('./routes/transform');
 var dbload = require('./routes/load-db');
 var console = require('./routes/console');
+var exportCSV = require('./routes/export-to-csv')
 
 
 var app = express();
@@ -23,6 +24,7 @@ app.use('/load', loadRouter);
 app.use('/transform', transformRouter);
 app.use('/dbload', dbload);
 app.use('/console', console);
+app.use('/export', exportCSV);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

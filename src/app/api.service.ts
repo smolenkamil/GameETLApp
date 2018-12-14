@@ -11,6 +11,7 @@ const extractUrl = '/scrap'
 const transformUrl = '/transform'
 const loadUrl = '/dbload'
 const consoleUrl = '/console'
+const exportUrl = '/export'
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +23,13 @@ export class ApiService {
   private extractData(res: Response) {
     let body = res;
     return body || { };
+  }
+
+  export(command: string): Observable<any> {
+    const url = `${exportUrl}/${command}`;
+    return this.http.get(url, httpOptions).pipe(
+      map(this.extractData),
+      catchError(this.handleError));
   }
 
   extract(): Observable<any> {
