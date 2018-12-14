@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../api.service';
+import {flatMap} from 'rxjs/internal/operators';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-etl-page',
@@ -25,6 +27,54 @@ export class EtlPageComponent implements OnInit {
 
   stagelog:string = ""
 
+  all(){
+    this.stagelog ="Commiting extraction!";
+    this.loading = true;
+    this.refreshBtns()
+    this.api.extract()
+      .subscribe(res => {
+        console.log(res);
+        this.stagelog ="";
+        this.stage = "transform"
+        this.refreshBtns()
+        this.all2Step()
+
+      }, err => {
+        console.log(err);
+      });
+  }
+  all2Step() {
+    this.stagelog ="Don't think is nothing!";
+    this.refreshBtns();
+    this.api.transform()
+      .subscribe(res => {
+        console.log(res);
+        this.stagelog ="";
+        this.stage = "load"
+        this.refreshBtns()
+        setTimeout(()=> {
+          this.all3Step()
+        },1000)
+      }, err => {
+        console.log(err);
+      });
+  }
+
+  all3Step(){
+    this.stagelog ="Loading!"
+    this.refreshBtns()
+    this.api.load('load')
+      .subscribe(res => {
+        console.log(res);
+        this.loading = false;
+        this.stagelog ="";
+        this.stage = "extract"
+        this.refreshBtns()
+      }, err => {
+        console.log(err);
+      });
+  }
+
   nextStage(){
     switch(this.stage){
       case "extract":
@@ -46,7 +96,6 @@ export class EtlPageComponent implements OnInit {
           console.log(res);
           var tmp = res.messages
           for(var i=0;i<tmp.length;i++){
-            console.log("ddd"+ i)
             if(this.consoleMessages[0].startsWith("--") && tmp[i].startsWith("--"))
               this.consoleMessages[0] = tmp[i]
             else
@@ -58,28 +107,11 @@ export class EtlPageComponent implements OnInit {
     },2000)
   }
 
-  test(){
-    this.api.load('test')
-      .subscribe(res => {
-        console.log(res);
-      }, err => {
-        console.log(err);
-      });
-  }
 
   extractProcess(){
     this.stagelog ="Commiting extraction!";
     this.loading = true;
     this.refreshBtns()
-    // setTimeout(()=>{
-    //   this.stagelog ="Brace Yourself!";
-    // }, 1000)
-    // setTimeout(()=>{
-    //   this.loading = false;
-    //   this.stagelog ="";
-    //   this.stage = "transform"
-    //   this.refreshBtns()
-    // }, 2000)
     this.api.extract()
       .subscribe(res => {
         console.log(res);
@@ -111,15 +143,18 @@ export class EtlPageComponent implements OnInit {
     this.stagelog ="Loading!";
     this.loading = true;
     this.refreshBtns()
-    setTimeout(()=>{
-      this.stagelog ="Fly, you fools!";
-    }, 1000)
-    setTimeout(()=>{
-      this.loading = false;
-      this.stagelog ="";
-      this.stage = "extract"
-      this.refreshBtns()
-    }, 2000)
+    this.api.load('load')
+      .subscribe(res => {
+        console.log(res);
+        this.loading = false;
+        this.stagelog ="";
+        this.stage = "extract"
+        this.refreshBtns()
+      }, err => {
+        console.log(err);
+      });
+
+
   }
 
 

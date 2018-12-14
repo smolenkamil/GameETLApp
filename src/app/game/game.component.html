@@ -30,6 +30,6 @@
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row = index; columns: displayedColumns;" [routerLink]="['/game-details/', row]"></tr>
+    <tr mat-row *matRowDef="let row = index; columns: displayedColumns;" [routerLink]="['/game-details/', row+1]"></tr>
   </table>
 </div>

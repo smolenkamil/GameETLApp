@@ -18,13 +18,15 @@ export class GameComponent implements OnInit {
   constructor(private api: ApiService) { }
 
   ngOnInit() {
-    this.api.getGames()
-      .subscribe(res => {
-        console.log(res);
-        this.games = res;
-      }, err => {
-        console.log(err);
-      });
+    setTimeout(()=>{
+      this.api.getGames()
+        .subscribe(res => {
+          console.log(res);
+          this.games = res;
+        }, err => {
+          console.log(err);
+        });
+    },500)
   }
 
 }

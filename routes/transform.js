@@ -13,8 +13,8 @@ router.get('/', function(req, res, next) {
     obj[i].date = formatDate(obj[i].date)
     obj[i].rating = formatRating(obj[i].rating)
     obj[i].thumbs = formatThumbs(obj[i].thumbs)
-    obj[i].tags = arrToStr(obj[i].tags)
-    obj[i].similar = arrToStr(obj[i].similar)
+    // obj[i].tags = arrToStr(obj[i].tags)
+    // obj[i].similar = arrToStr(obj[i].similar)
     obj[i].hardware_req = formatHardwareReq(obj[i].hardware_req)
     obj[i].comments = formatComments(obj[i].comments)
   }
@@ -53,6 +53,8 @@ function formatComments(comments){
     newDate.minute = parseInt(entitiesT[1])
     comments[i].date = newDate
     comments[i].rank = parseInt(comments[i].rank)
+    var tmp = comments[i].contents.split("\n")
+    comments[i].contents = tmp.join(" ").substr(0,7999)
   }
   return comments
 }
@@ -86,15 +88,15 @@ function formatHardwareReq(requirements) {
 
 function formatRating(rating){
   var tmpRating = {}
-  tmpRating.value = parseInt(rating.value)
-  tmpRating.quantity = parseInt(rating.quantity)
+  tmpRating.value = parseInt(rating.value) || 0
+  tmpRating.quantity = parseInt(rating.quantity) || 0
   return tmpRating
 }
 
 function formatThumbs(thumbs){
   var tmpThumbs = {}
-  tmpThumbs.up = parseInt(thumbs.up)
-  tmpThumbs.down = parseInt(thumbs.down)
+  tmpThumbs.up = parseInt(thumbs.up) || 0
+  tmpThumbs.down = parseInt(thumbs.down) || 0
   return tmpThumbs
 }
 

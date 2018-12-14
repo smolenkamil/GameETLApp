@@ -1,11 +1,11 @@
 
 <div class="mainP">
-  <button mat-raised-button disabled={{this.loading}}  color="warn">ETL</button>
+  <button mat-raised-button disabled={{this.loading}} (click)="all()" color="warn">ETL</button>
 </div>
 <div class="button-row">
   <button mat-raised-button disabled={{this.buttonDis[0]}} (click)="nextStage()" color="primary">Extract</button>
   <button mat-raised-button disabled={{this.buttonDis[1]}} (click)="nextStage()" color="primary">Transform</button>
-  <button mat-raised-button disabled={{this.buttonDis[2]}} (click)="nextStage()" color="primary">Load</button>
+  <button mat-raised-button disabled={{this.buttonDis[2]}} (click)="loadProcess()" color="primary">Load</button>
 </div>
 
 <mat-progress-spinner  [style.visibility]="loading ? 'visible' : 'hidden'" [mode]="spinMode" ></mat-progress-spinner>
@@ -14,6 +14,6 @@
 </div>
 
 
-
-<button mat-raised-button (click)="test()" color="primary">TEST</button>
+<div><br><br><br><br></div>
+<!--<button mat-raised-button (click)="test()" color="primary">TEST</button>-->
 <app-console [dt]="consoleMessages"></app-console>

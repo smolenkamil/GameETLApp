@@ -18,11 +18,13 @@ export class GameDetailComponent implements OnInit {
   }
 
   getGameDetails(id) {
-    this.api.getGame(id)
-      .subscribe(data => {
-        console.log(data);
-        this.game = data;
-      });
+    setTimeout(()=>{
+      this.api.getGame(id)
+        .subscribe(data => {
+          console.log(data);
+          this.game = data;
+        });
+    },500)
   }
 
 
